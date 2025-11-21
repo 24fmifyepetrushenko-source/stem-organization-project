@@ -3,6 +3,8 @@
   line-height: 1.4;
   color: #111827;
   background: #f3f4f6;
+  --chart-height: 380px;
+  --dataset-column-min: 380px;
 }
 
 body {
@@ -27,8 +29,8 @@ body {
 }
 
 .layout {
-  display: grid;
-  grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 16px;
 }
 
@@ -80,6 +82,10 @@ input[type='file'] {
   margin-top: 10px;
 }
 
+.metrics-grid.single-column {
+  grid-template-columns: 1fr;
+}
+
 .metric {
   background: #f9fafb;
   border-radius: 8px;
@@ -103,6 +109,10 @@ input[type='file'] {
   gap: 8px;
 }
 
+.chart-header h2 {
+  margin: 0;
+}
+
 .chart-type-control {
   display: flex;
   align-items: center;
@@ -114,8 +124,41 @@ input[type='file'] {
   font-size: 0.8rem;
 }
 
+.dataset-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--dataset-column-min), 1fr));
+  gap: 16px;
+}
+
+.dataset-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chart-area {
+  height: var(--chart-height);
+}
+
+.chart-area canvas {
+  height: 100% !important;
+}
+
+.section-label {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.dataset-title {
+  margin: 2px 0 8px;
+  font-weight: 600;
+}
+
 @media (max-width: 800px) {
   .layout {
-    grid-template-columns: minmax(0, 1fr);
+    flex-direction: column;
   }
 }

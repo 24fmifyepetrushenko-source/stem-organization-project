@@ -6,24 +6,15 @@ import { ChartPanel } from './components/ChartPanel.jsx';
 
 export default function App() {
   const [datasets, setDatasets] = useState(SAMPLE_DATASETS);
-  const [activeDatasetId, setActiveDatasetId] = useState(
-    SAMPLE_DATASETS[0]?.id ?? null
-  );
   const [chartType, setChartType] = useState('bar');
 
   const handleDatasetsAdded = (newOnes) => {
     setDatasets((prev) => {
       const existingIds = new Set(prev.map((d) => d.id));
       const filtered = newOnes.filter((d) => !existingIds.has(d.id));
-      const merged = [...prev, ...filtered];
-      if (!activeDatasetId && merged.length > 0) {
-        setActiveDatasetId(merged[0].id);
-      }
-      return merged;
+      return [...prev, ...filtered];
     });
   };
-
-  const activeDataset = datasets.find((d) => d.id === activeDatasetId) ?? null;
 
   return (
     <div className="app-root">
@@ -36,22 +27,25 @@ export default function App() {
       </header>
 
       <main className="layout">
-        <section className="left-column">
-          <FileUploadPanel onDatasetsAdded={handleDatasetsAdded} />
-          <MetricsPanel
-            datasets={datasets}
-            activeDataset={activeDataset}
-            onActiveDatasetChange={setActiveDatasetId}
-          />
-        </section>
+        <FileUploadPanel onDatasetsAdded={handleDatasetsAdded} />
 
-        <section className="right-column">
-          <ChartPanel
-            datasets={datasets}
-            activeDataset={activeDataset}
-            chartType={chartType}
-            onChartTypeChange={setChartType}
-          />
+        <section className="dataset-grid">
+          {datasets.length === 0 && (
+            <div className="card">
+              <p className="muted">Набори даних ще не завантажені.</p>
+            </div>
+          )}
+
+          {datasets.map((dataset) => (
+            <div className="dataset-column" key={dataset.id}>
+              <ChartPanel
+                dataset={dataset}
+                chartType={chartType}
+                onChartTypeChange={setChartType}
+              />
+              <MetricsPanel dataset={dataset} />
+            </div>
+          ))}
         </section>
       </main>
     </div>
