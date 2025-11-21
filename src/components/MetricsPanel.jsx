@@ -101,18 +101,3 @@ function MetricsDetails({ dataset }) {
     </div>
   );
 }
-src/main.jsx
-Новий
-+10
--0
-
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App.jsx';
-import './styles.css';
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
