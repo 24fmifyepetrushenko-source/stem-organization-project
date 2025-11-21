@@ -5,6 +5,7 @@
   background: #f3f4f6;
   --chart-height: 380px;
   --dataset-column-min: 380px;
+  --panel-height: 520px;
 }
 
 body {
@@ -125,15 +126,44 @@ input[type='file'] {
 }
 
 .dataset-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--dataset-column-min), 1fr));
+  display: flex;
+  flex-wrap: nowrap;
   gap: 16px;
+  overflow-x: auto;
+  padding: 10px 8px;
+  margin: 0 -8px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  scroll-snap-type: x proximity;
 }
 
 .dataset-column {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  min-width: var(--dataset-column-min);
+  flex: 0 0 var(--dataset-column-min);
+  scroll-snap-align: start;
+}
+
+.dataset-column > .card {
+  display: flex;
+  flex-direction: column;
+  height: var(--panel-height);
+  overflow: hidden;
+}
+
+.chart-card .chart-area {
+  flex: 1;
+  min-height: var(--chart-height);
+  min-width: 0;
+}
+
+.metrics-card .metrics-grid {
+  flex: 1;
+  margin-top: 10px;
+  overflow: auto;
 }
 
 .chart-area {
